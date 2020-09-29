@@ -71,6 +71,7 @@ class _TodoListState extends State<TodoList> {
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
+        backgroundColor: Colors.green,
       ), 
     );
   }
@@ -113,7 +114,7 @@ class _TodoListItemState extends State<TodoListItem> {
           Text(itemData.itemTitle),
           Row (
             children: <Widget>[
-              FlatButton(
+              IconButton(
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -137,13 +138,15 @@ class _TodoListItemState extends State<TodoListItem> {
                     ),
                   );
                 },
-                child: Text("EDIT"),
+                icon: Icon(Icons.edit),
+                color: Colors.blue,
               ),
-              FlatButton(
+              IconButton(
                 onPressed: () {
                   itemData.removeSelf(itemData);
                 },
-                child: Text("DELETE"),
+                icon: Icon(Icons.delete),
+                color: Colors.red,
               ),
             ],
           ),
