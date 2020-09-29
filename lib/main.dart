@@ -27,19 +27,25 @@ class _TodoListState extends State<TodoList> {
   void initState() {
     super.initState();
     _todoListItems = [
-      TodoListItemData("Item 1", false),
-      TodoListItemData("Item 2", false),
-      TodoListItemData("Item 3", true),
-      TodoListItemData("Item 4", false),
-      TodoListItemData("Item 5", true),
+      TodoListItemData("Item 1", false, this._removeTodoListItemData),
+      TodoListItemData("Item 2", false, this._removeTodoListItemData),
+      TodoListItemData("Item 3", true, this._removeTodoListItemData),
+      TodoListItemData("Item 4", false, this._removeTodoListItemData),
+      TodoListItemData("Item 5", true, this._removeTodoListItemData),
     ];
   }
 
   void _addTodoListItemData() {
     setState(() {
       this._todoListItems.add(
-        TodoListItemData("Item " + (this._todoListItems.length+1).toString(), false)
+        TodoListItemData("Item " + (this._todoListItems.length+1).toString(), false, this._removeTodoListItemData)
       );
+    });
+  }
+
+  void _removeTodoListItemData(TodoListItemData item) {
+    setState(() {
+      this._todoListItems.remove(item);
     });
   }
 
@@ -47,7 +53,7 @@ class _TodoListState extends State<TodoList> {
     return new ListView.builder(
       itemCount: _todoListItems.length,
       itemBuilder: (context, index) {
-        return TodoListItem(_todoListItems[index]);
+        return TodoListItem(_todoListItems[index], ObjectKey(_todoListItems[index]));
       }
     );
   }
@@ -73,12 +79,13 @@ class _TodoListState extends State<TodoList> {
 class TodoListItemData {
   String itemTitle;
   bool isChecked;
-  TodoListItemData(this.itemTitle, this.isChecked);
+  Function(TodoListItemData) removeSelf;
+  TodoListItemData(this.itemTitle, this.isChecked, this.removeSelf);
 }
 
 class TodoListItem extends StatefulWidget {
   final TodoListItemData itemData;
-  TodoListItem(this.itemData);
+  TodoListItem(this.itemData, Key key) : super(key: key);
 
   @override
   _TodoListItemState createState() => _TodoListItemState(itemData);
@@ -99,7 +106,18 @@ class _TodoListItemState extends State<TodoListItem> {
           });
         }
       ),
-      title: Text(itemData.itemTitle)
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(itemData.itemTitle),
+          FlatButton(
+            onPressed: () {
+              itemData.removeSelf(itemData);
+            },
+            child: Text("DELETE"),
+          )
+        ]
+      )
     );
   }
 }
