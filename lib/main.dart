@@ -35,6 +35,14 @@ class _TodoListState extends State<TodoList> {
     ];
   }
 
+  void _addTodoListItemData() {
+    setState(() {
+      this._todoListItems.add(
+        TodoListItemData("Item " + (this._todoListItems.length+1).toString(), false)
+      );
+    });
+  }
+
   Widget _buildTodoList() {
     return new ListView.builder(
       itemCount: _todoListItems.length,
@@ -53,7 +61,7 @@ class _TodoListState extends State<TodoList> {
       body: _buildTodoList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Some method here
+          _addTodoListItemData();
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
