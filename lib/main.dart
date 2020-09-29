@@ -24,12 +24,33 @@ class _TodoListState extends State<TodoList> {
   List <TodoListItemData> _todoListItems;
 
   @override
+  void initState() {
+    super.initState();
+    _todoListItems = [
+      TodoListItemData("Item 1", false),
+      TodoListItemData("Item 2", false),
+      TodoListItemData("Item 3", true),
+      TodoListItemData("Item 4", false),
+      TodoListItemData("Item 5", true),
+    ];
+  }
+
+  Widget _buildTodoList() {
+    return new ListView.builder(
+      itemCount: _todoListItems.length,
+      itemBuilder: (context, index) {
+        return ListTile(title: Text(_todoListItems[index].itemTitle));
+      }
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter To-do List'),
       ),
-      body: Text("Todo List 2 Here"),
+      body: _buildTodoList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Some method here
