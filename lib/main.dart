@@ -47,7 +47,7 @@ class _TodoListState extends State<TodoList> {
     return new ListView.builder(
       itemCount: _todoListItems.length,
       itemBuilder: (context, index) {
-        return ListTile(title: Text(_todoListItems[index].itemTitle));
+        return TodoListItem(_todoListItems[index]);
       }
     );
   }
@@ -74,4 +74,32 @@ class TodoListItemData {
   String itemTitle;
   bool isChecked;
   TodoListItemData(this.itemTitle, this.isChecked);
+}
+
+class TodoListItem extends StatefulWidget {
+  final TodoListItemData itemData;
+  TodoListItem(this.itemData);
+
+  @override
+  _TodoListItemState createState() => _TodoListItemState(itemData);
+}
+
+class _TodoListItemState extends State<TodoListItem> {
+  final TodoListItemData itemData;
+  _TodoListItemState(this.itemData);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Checkbox(
+        value: itemData.isChecked,
+        onChanged: (bool value) {
+          setState(() {
+            itemData.isChecked = value;
+          });
+        }
+      ),
+      title: Text(itemData.itemTitle)
+    );
+  }
 }
