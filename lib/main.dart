@@ -92,7 +92,8 @@ class TodoListItem extends StatefulWidget {
 }
 
 class _TodoListItemState extends State<TodoListItem> {
-  final TodoListItemData itemData;
+  TodoListItemData itemData;
+  TextEditingController itemTitleController = new TextEditingController();
   _TodoListItemState(this.itemData);
 
   @override
@@ -110,12 +111,42 @@ class _TodoListItemState extends State<TodoListItem> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(itemData.itemTitle),
-          FlatButton(
-            onPressed: () {
-              itemData.removeSelf(itemData);
-            },
-            child: Text("DELETE"),
-          )
+          Row (
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    child: AlertDialog(
+                      title: Text("Change Item Title"),
+                      content: TextField(
+                        decoration: new InputDecoration(hintText: "Item title"),
+                        controller: itemTitleController,
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("SAVE"),
+                          onPressed: () {
+                            setState(() {
+                              itemData.itemTitle = itemTitleController.text;
+                            });
+                            Navigator.of(context).pop();
+                          }
+                        )
+                      ],
+                    ),
+                  );
+                },
+                child: Text("EDIT"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  itemData.removeSelf(itemData);
+                },
+                child: Text("DELETE"),
+              ),
+            ],
+          ),
         ]
       )
     );
