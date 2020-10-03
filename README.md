@@ -42,5 +42,11 @@ In Flutter, everything is a widget. Even your app itself is a widget.
 - All layout widgets have either a child property, if they take a single child, or a children property if they take a list of widgets.
 - `Row`, `Column`, and `Container` are examples of layout widgets.
 
+## Additional Resources
+[Workshop 1 Video Lecture](https://drive.google.com/file/d/1-oAmzRUrlFRMiSevXe6z5rTFMAsRoqPo/view) 
+\
+\
+[Powerpoint](https://drive.google.com/file/d/1j3Dakgaz_UvvUtN_8EdsGNcrrFy-S9yK/view?usp=sharing)
+
 ## Credits
 The original source code is forked from [Carlos Panganiban's repository here](https://github.com/lickorice/flutter-todo-list). This README is provided by the Tech Education team.
