@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // removes the debug banner
       title: 'Flutter To-do List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -48,7 +49,7 @@ class _TodoListState extends State<TodoList> {
     // list named 'Item X'.
     setState(() {
       this._todoListItems.add(
-        TodoListItemData("Item " + (this._todoListItems.length+1).toString(), false, this._removeTodoListItemData)
+          TodoListItemData("Item " + (this._todoListItems.length+1).toString(), false, this._removeTodoListItemData)
       );
     });
   }
@@ -65,15 +66,15 @@ class _TodoListState extends State<TodoList> {
     // This returns the ListView.builder that builds the whole ListView containing
     // the TodoListItem widgets:
     return new ListView.builder(
-      itemCount: _todoListItems.length,     // The total count in our list of class instances
-      itemBuilder: (context, index) {       // The builder itself. Note that this is a function.
-        return TodoListItem(
-          _todoListItems[index],            // Note that TodoListItem takes TodoListItemData as
-                                            // a parameter.
-          ObjectKey(_todoListItems[index])  // Likewise, we would like a key unique to the object
-                                            // instance itself:
-        );
-      }
+        itemCount: _todoListItems.length,     // The total count in our list of class instances
+        itemBuilder: (context, index) {       // The builder itself. Note that this is a function.
+          return TodoListItem(
+              _todoListItems[index],            // Note that TodoListItem takes TodoListItemData as
+              // a parameter.
+              ObjectKey(_todoListItems[index])  // Likewise, we would like a key unique to the object
+            // instance itself:
+          );
+        }
     );
   }
 
@@ -88,13 +89,13 @@ class _TodoListState extends State<TodoList> {
       body: _buildTodoList(), // The body builds the ListView here
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _addTodoListItemData(); // The FloatingActionButtion calls 
-                                  // _addTodoListItemData when pressed.
+          _addTodoListItemData(); // The FloatingActionButtion calls
+          // _addTodoListItemData when pressed.
         },
         tooltip: 'Add Item',
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
-      ), 
+      ),
     );
   }
 }
@@ -116,7 +117,7 @@ class TodoListItem extends StatefulWidget {
 
   // The constructor. Note that it also takes in a Key. This key will be used to make itself
   // distinct during building of the ListView:
-  TodoListItem(this.itemData, Key key) : super(key: key); 
+  TodoListItem(this.itemData, Key key) : super(key: key);
 
   @override
   _TodoListItemState createState() => _TodoListItemState(itemData);
@@ -133,64 +134,90 @@ class _TodoListItemState extends State<TodoListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Checkbox(
-        value: itemData.isChecked,
-        onChanged: (bool value) {
-          setState(() {
-            itemData.isChecked = value; // Here, we change the state of the checkbox as necessary
-          });
-        }
-      ),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(itemData.itemTitle),
-          Row (
+        leading: Checkbox(
+            value: itemData.isChecked,
+            onChanged: (bool value) {
+              setState(() {
+                itemData.isChecked = value; // Here, we change the state of the checkbox as necessary
+              });
+            }
+        ),
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              IconButton(
-                onPressed: () {
-                  // When the "edit" button is pressed, it launches a dialog containing another
-                  // widget: a text field with a save button that performs the necessary
-                  // value modifications:
-                  showDialog(
-                    context: context,
-                    child: AlertDialog(
-                      title: Text("Change Item Title"),
-                      content: TextField(
-                        decoration: new InputDecoration(hintText: "Item title"),
-                        controller: itemTitleController,
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text("SAVE"),
-                          onPressed: () {
-                            setState(() {
-                              // We save the new title here:
-                              itemData.itemTitle = itemTitleController.text;
-                            });
-                            Navigator.of(context).pop();
-                          }
-                        )
-                      ],
-                    ),
-                  );
-                },
-                icon: Icon(Icons.edit),
-                color: Colors.blue,
+              Text(itemData.itemTitle),
+              Row (
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      // When the "edit" button is pressed, it launches a dialog containing another
+                      // widget: a text field with a save button that performs the necessary
+                      // value modifications:
+                      showDialog(
+                        context: context,
+                        child: AlertDialog(
+                          title: Text("Change Item Title"),
+                          content: TextField(
+                            decoration: new InputDecoration(hintText: "Item title"),
+                            controller: itemTitleController,
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                                child: Text("SAVE"),
+                                onPressed: () {
+                                  setState(() {
+                                    // We save the new title here:
+                                    itemData.itemTitle = itemTitleController.text;
+                                  });
+                                  Navigator.of(context).pop();
+                                }
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.edit),
+                    color: Colors.blue,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      // When the "delete" button is pressed, we delete the item itself
+                      // from the parent list using the passed function before:
+                      showDialog(
+                        context: context,
+                        child: AlertDialog(
+                          title: Text("Deleting Task.."),
+                          content: Text("Are You Sure Want To Proceed ?"),
+                          actions: <Widget>[
+                            FlatButton(
+                                child: Text("Yes"),
+                                onPressed: () {
+                                  setState(() {
+                                    // task is deleted if Yes is pressed
+                                    itemData.removeSelf(itemData);
+                                  });
+                                  Navigator.of(context).pop();
+                                }
+                            ),
+                            FlatButton(
+                                child: Text("No"),
+                                // goes back to main interface if No is pressed
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                            ),
+                          ],
+                        ),
+                      );
+
+                    },
+                    icon: Icon(Icons.delete),
+                    color: Colors.red,
+                  ),
+                ],
               ),
-              IconButton(
-                onPressed: () {
-                  // When the "delete" button is pressed, we delete the item itself
-                  // from the parent list using the passed function before:
-                  itemData.removeSelf(itemData);
-                },
-                icon: Icon(Icons.delete),
-                color: Colors.red,
-              ),
-            ],
-          ),
-        ]
-      )
+            ]
+        )
     );
   }
 }
