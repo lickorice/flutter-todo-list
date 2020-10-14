@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter To-do List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "Baloo_Chettan_2",
       ),
       home: Homepage(), // Calls the TodoList() scaffold here
     );
@@ -92,9 +94,11 @@ class _TodoListState extends State<TodoList> {
     return Scaffold(
       // We use a scaffold here because we would like to utilize the FloatingActionButton:
       appBar: AppBar(
-        title: Text(
-          'Flutter To-do List',
-        ), // The title of our application
+        title: Text('Flutter To-do List',
+            style:TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,)),
+        backgroundColor: Colors.white,// The title of our application
         automaticallyImplyLeading: false, //removes the back button on the appbar
       ),
       body: _buildTodoList(), // The body builds the ListView here
@@ -102,6 +106,30 @@ class _TodoListState extends State<TodoList> {
         onPressed: () {
           _addTodoListItemData(); // The FloatingActionButtion calls
           // _addTodoListItemData when pressed.
+          // A TextEditingController for editing the itemTitle of our to-do list:
+          TextEditingController itemTitleController = new TextEditingController();
+          showDialog(
+            context: context,
+            child: AlertDialog(
+              title: Text("New Item"),
+              content: TextField(
+                decoration: new InputDecoration(hintText: "Item title"),
+                controller: itemTitleController,
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text("SAVE"),
+                    onPressed: () {
+                      setState(() {
+                        // We save the item title here:
+                        _todoListItems[_todoListItems.length - 1] = TodoListItemData(itemTitleController.text, false, this._removeTodoListItemData);
+                      });
+                      Navigator.of(context).pop();
+                    }
+                )
+              ],
+            ),
+          );
         },
         tooltip: 'Add Item',
         child: Icon(Icons.add),
@@ -148,19 +176,35 @@ class _TodoListItemState extends State<TodoListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+        contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
         leading: Checkbox(
             value: itemData.isChecked,
+            checkColor: Colors.grey,
+            activeColor: Colors.transparent,
             onChanged: (bool value) {
               setState(() {
-                itemData.isChecked =
-                    value; // Here, we change the state of the checkbox as necessary
+                itemData.isChecked = !itemData.isChecked;
               });
             }),
         title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(itemData.itemTitle),
-              Row(
+              Text(itemData.itemTitle,style: ((){
+                if (itemData.isChecked)
+                  return TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      decorationThickness: 2.0,
+                      color: Colors.grey,
+                      fontFamily: "Baloo_Chettan_2",
+                      fontSize: 18.0);
+                      //fontWeight: FontWeight.bold);
+                else
+                  return TextStyle(
+                      fontFamily: "Baloo_Chettan_2",
+                      fontSize: 18.0);
+                      //fontWeight: FontWeight.bold);
+              }())),
+              Row (
                 children: <Widget>[
                   IconButton(
                     onPressed: () {
