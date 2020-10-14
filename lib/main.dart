@@ -320,7 +320,7 @@ class _HomepageState extends State<Homepage> {
             //This part just designs the button
             child: Center(
               child: Container(
-                width: 100.0,
+                width: 150.0,
                 height: 60.0,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.transparent),
@@ -329,7 +329,7 @@ class _HomepageState extends State<Homepage> {
                       Radius.circular(10.0) //         <--- border radius here
                       ),
                 ),
-                child: Icon(Icons.keyboard_arrow_right, color: Colors.white70, size: 50),
+                child: Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 30),
               ),
             ),
           ),
