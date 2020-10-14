@@ -164,11 +164,14 @@ class _TodoListItemState extends State<TodoListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+        contentPadding: EdgeInsets.fromLTRB(25, 10, 25, 10),
         leading: Checkbox(
             value: itemData.isChecked,
+            checkColor: Colors.grey,
+            activeColor: Colors.transparent,
             onChanged: (bool value) {
               setState(() {
-                itemData.isChecked = value; // Here, we change the state of the checkbox as necessary
+                itemData.isChecked = !itemData.isChecked;
               });
             }
         ),
@@ -180,15 +183,15 @@ class _TodoListItemState extends State<TodoListItem> {
                   return TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationThickness: 2.0,
-                      color: Colors.red,
+                      color: Colors.grey,
                       fontFamily: "Baloo_Chettan_2",
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold);
+                      fontSize: 18.0);
+                      //fontWeight: FontWeight.bold);
                 else
                   return TextStyle(
                       fontFamily: "Baloo_Chettan_2",
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold);
+                      fontSize: 18.0);
+                      //fontWeight: FontWeight.bold);
               }())),
               Row (
                 children: <Widget>[
@@ -221,7 +224,7 @@ class _TodoListItemState extends State<TodoListItem> {
                       );
                     },
                     icon: Icon(Icons.edit),
-                    color: Colors.grey,
+                    color: Colors.blue,
                   ),
                   IconButton(
                     onPressed: () {
@@ -255,7 +258,7 @@ class _TodoListItemState extends State<TodoListItem> {
                       );
                     },
                     icon: Icon(Icons.delete),
-                    color: Colors.black,
+                    color: Colors.red,
                   ),
                 ],
               ),
