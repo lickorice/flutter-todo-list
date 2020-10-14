@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter To-do List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "Baloo_Chettan_2",
       ),
       home: TodoList(), // Calls the TodoList() scaffold here
     );
@@ -84,7 +86,8 @@ class _TodoListState extends State<TodoList> {
     return Scaffold(
       // We use a scaffold here because we would like to utilize the FloatingActionButton:
       appBar: AppBar(
-        title: Text('Flutter To-do List'), // The title of our application
+        title: Text('Flutter To-do List', style:TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.white,// The title of our application
       ),
       body: _buildTodoList(), // The body builds the ListView here
       floatingActionButton: FloatingActionButton(
