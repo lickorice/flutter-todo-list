@@ -86,7 +86,10 @@ class _TodoListState extends State<TodoList> {
     return Scaffold(
       // We use a scaffold here because we would like to utilize the FloatingActionButton:
       appBar: AppBar(
-        title: Text('Flutter To-do List', style:TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: Text('Flutter To-do List',
+            style:TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,)),
         backgroundColor: Colors.white,// The title of our application
       ),
       body: _buildTodoList(), // The body builds the ListView here
@@ -172,9 +175,20 @@ class _TodoListItemState extends State<TodoListItem> {
         title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(itemData.itemTitle, style: ((){
+              Text(itemData.itemTitle,style: ((){
                 if (itemData.isChecked)
-                  return TextStyle(decoration: TextDecoration.lineThrough, color: Colors.red);
+                  return TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      decorationThickness: 2.0,
+                      color: Colors.red,
+                      fontFamily: "Baloo_Chettan_2",
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold);
+                else
+                  return TextStyle(
+                      fontFamily: "Baloo_Chettan_2",
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold);
               }())),
               Row (
                 children: <Widget>[
@@ -207,7 +221,7 @@ class _TodoListItemState extends State<TodoListItem> {
                       );
                     },
                     icon: Icon(Icons.edit),
-                    color: Colors.blue,
+                    color: Colors.grey,
                   ),
                   IconButton(
                     onPressed: () {
@@ -241,7 +255,7 @@ class _TodoListItemState extends State<TodoListItem> {
                       );
                     },
                     icon: Icon(Icons.delete),
-                    color: Colors.red,
+                    color: Colors.black,
                   ),
                 ],
               ),
