@@ -164,7 +164,7 @@ class _TodoListItemState extends State<TodoListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        contentPadding: EdgeInsets.fromLTRB(25, 10, 25, 10),
+        contentPadding: EdgeInsets.fromLTRB(15, 5, 15, 5),
         leading: Checkbox(
             value: itemData.isChecked,
             checkColor: Colors.grey,
