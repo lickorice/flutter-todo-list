@@ -207,7 +207,32 @@ class _TodoListItemState extends State<TodoListItem> {
                     onPressed: () {
                       // When the "delete" button is pressed, we delete the item itself
                       // from the parent list using the passed function before:
-                      itemData.removeSelf(itemData);
+                      showDialog(
+                        context: context,
+                        child: AlertDialog(
+                          title: Text("Deleting Task.."),
+                          content: Text("Are You Sure Want To Proceed ?"),
+                          actions: <Widget>[
+                            FlatButton(
+                                child: Text("Yes"),
+                                onPressed: () {
+                                  setState(() {
+                                    // task is deleted if Yes is pressed
+                                    itemData.removeSelf(itemData);
+                                  });
+                                  Navigator.of(context).pop();
+                                }
+                            ),
+                            FlatButton(
+                              child: Text("No"),
+                              // goes back to main interface if No is pressed
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     icon: Icon(Icons.delete),
                     color: Colors.red,
