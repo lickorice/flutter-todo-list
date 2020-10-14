@@ -172,7 +172,10 @@ class _TodoListItemState extends State<TodoListItem> {
         title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(itemData.itemTitle),
+              Text(itemData.itemTitle, style: ((){
+                if (itemData.isChecked)
+                  return TextStyle(decoration: TextDecoration.lineThrough, color: Colors.red);
+              }())),
               Row (
                 children: <Widget>[
                   IconButton(
