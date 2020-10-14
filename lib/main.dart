@@ -299,6 +299,7 @@ class _HomepageState extends State<Homepage> {
                 style: TextStyle(
                   //applies style to your text
                   fontSize: 40,
+                  fontWeight: FontWeight.bold
                 ),
               ),
             ),
@@ -328,7 +329,7 @@ class _HomepageState extends State<Homepage> {
                       Radius.circular(10.0) //         <--- border radius here
                       ),
                 ),
-                child: Icon(Icons.arrow_forward_ios),
+                child: Icon(Icons.keyboard_arrow_right, color: Colors.white70, size: 50),
               ),
             ),
           ),
