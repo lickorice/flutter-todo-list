@@ -91,6 +91,30 @@ class _TodoListState extends State<TodoList> {
         onPressed: () {
           _addTodoListItemData(); // The FloatingActionButtion calls
           // _addTodoListItemData when pressed.
+          // A TextEditingController for editing the itemTitle of our to-do list:
+          TextEditingController itemTitleController = new TextEditingController();
+          showDialog(
+            context: context,
+            child: AlertDialog(
+              title: Text("New Item"),
+              content: TextField(
+                decoration: new InputDecoration(hintText: "Item title"),
+                controller: itemTitleController,
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text("SAVE"),
+                    onPressed: () {
+                      setState(() {
+                        // We save the item title here:
+                        _todoListItems[_todoListItems.length - 1] = TodoListItemData(itemTitleController.text, false, this._removeTodoListItemData);
+                      });
+                      Navigator.of(context).pop();
+                    }
+                )
+              ],
+            ),
+          );
         },
         tooltip: 'Add Item',
         child: Icon(Icons.add),
@@ -183,33 +207,7 @@ class _TodoListItemState extends State<TodoListItem> {
                     onPressed: () {
                       // When the "delete" button is pressed, we delete the item itself
                       // from the parent list using the passed function before:
-                      showDialog(
-                        context: context,
-                        child: AlertDialog(
-                          title: Text("Deleting Task.."),
-                          content: Text("Are You Sure Want To Proceed ?"),
-                          actions: <Widget>[
-                            FlatButton(
-                                child: Text("Yes"),
-                                onPressed: () {
-                                  setState(() {
-                                    // task is deleted if Yes is pressed
-                                    itemData.removeSelf(itemData);
-                                  });
-                                  Navigator.of(context).pop();
-                                }
-                            ),
-                            FlatButton(
-                              child: Text("No"),
-                              // goes back to main interface if No is pressed
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-
+                      itemData.removeSelf(itemData);
                     },
                     icon: Icon(Icons.delete),
                     color: Colors.red,
