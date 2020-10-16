@@ -1,4 +1,5 @@
-part of MainApp;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 // This whole part is where the home page is made
 class HomePage extends StatefulWidget {
@@ -32,12 +33,7 @@ class _HomePageState extends State<HomePage> {
           GestureDetector(
             onTap: () {
               setState(() {});
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        TodoList()), // when pressed, goes to TodoList
-              );
+              Navigator.pushNamed(context, '/todo_list');
             },
 
             //This part just designs the button
