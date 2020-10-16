@@ -17,6 +17,8 @@ var textStrikeThrough = TextStyle(
 
 var textNormal = TextStyle(fontFamily: "Baloo_Chettan_2", fontSize: 18.0);
 
+var textRed = TextStyle(color: Colors.red);
+
 // This removes the glow when scrolling
 class NoGlowBehaviour extends ScrollBehavior {
   @override

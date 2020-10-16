@@ -34,12 +34,12 @@ class _TodoListState extends State<TodoList> {
     ];
   }
 
-  void _addTodoListItemData() {
+  void _addTodoListItemData(String itemTitle) {
     // This function adds a new instance of TodoListItemData to the _todoListItems
     // list named 'Item X'.
     setState(() {
       this._todoListItems.add(TodoListItemData(
-          "Item " + (this._todoListItems.length + 1).toString(),
+          itemTitle,
           false,
           this._removeTodoListItemData));
     });
@@ -82,15 +82,17 @@ class _TodoListState extends State<TodoList> {
     return Scaffold(
       // We use a scaffold here because we would like to utilize the FloatingActionButton:
       appBar: AppBar(
-        title: Text('Flutter To-do List', style: MyStyles.textBold,),
+        title: Text(
+          'Flutter To-do List',
+          style: MyStyles.textBold,
+        ),
         backgroundColor: Colors.white, // The title of our application
-        automaticallyImplyLeading: false, // Removes the back button on the appbar
+        automaticallyImplyLeading:
+            false, // Removes the back button on the appbar
       ),
       body: _buildTodoList(), // The body builds the ListView here
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _addTodoListItemData(); // The FloatingActionButtion calls
-          // _addTodoListItemData when pressed.
           // A TextEditingController for editing the itemTitle of our to-do list:
           TextEditingController itemTitleController =
               new TextEditingController();
@@ -104,13 +106,16 @@ class _TodoListState extends State<TodoList> {
               ),
               actions: <Widget>[
                 FlatButton(
+                    child: Text("CANCEL", style: MyStyles.textRed),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                FlatButton(
                     child: Text("SAVE"),
                     onPressed: () {
                       setState(() {
                         // We save the item title here:
-                        _todoListItems[_todoListItems.length - 1] =
-                            TodoListItemData(itemTitleController.text, false,
-                                this._removeTodoListItemData);
+                        _addTodoListItemData(itemTitleController.text);
                       });
                       Navigator.of(context).pop();
                     })
