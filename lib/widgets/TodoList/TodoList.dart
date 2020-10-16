@@ -38,10 +38,8 @@ class _TodoListState extends State<TodoList> {
     // This function adds a new instance of TodoListItemData to the _todoListItems
     // list named 'Item X'.
     setState(() {
-      this._todoListItems.add(TodoListItemData(
-          itemTitle,
-          false,
-          this._removeTodoListItemData));
+      this._todoListItems.add(
+          TodoListItemData(itemTitle, false, this._removeTodoListItemData));
     });
   }
 
@@ -51,6 +49,10 @@ class _TodoListState extends State<TodoList> {
     setState(() {
       this._todoListItems.remove(item);
     });
+  }
+
+  String _getNextItemTitle() {
+    return "Item " + (this._todoListItems.length + 1).toString();
   }
 
   Widget _buildTodoList() {
@@ -96,6 +98,7 @@ class _TodoListState extends State<TodoList> {
           // A TextEditingController for editing the itemTitle of our to-do list:
           TextEditingController itemTitleController =
               new TextEditingController();
+          itemTitleController.text = _getNextItemTitle();
           showDialog(
             context: context,
             child: AlertDialog(
