@@ -34,9 +34,6 @@ class _TodoListItemState extends State<TodoListItem> {
       itemData; // We store the instance of TodoListItemData like so
   _TodoListItemState(this.itemData); // The constructor.
 
-  // A TextEditingController for editing the itemTitle of our to-do list:
-  TextEditingController itemTitleController = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -65,6 +62,11 @@ class _TodoListItemState extends State<TodoListItem> {
                       // When the "edit" button is pressed, it launches a dialog containing another
                       // widget: a text field with a save button that performs the necessary
                       // value modifications:
+                      
+                      // A TextEditingController for editing the itemTitle of our to-do list:
+                      TextEditingController itemTitleController = new TextEditingController();
+                      itemTitleController.text = itemData.itemTitle;
+
                       showDialog(
                         context: context,
                         child: AlertDialog(
@@ -99,8 +101,8 @@ class _TodoListItemState extends State<TodoListItem> {
                       showDialog(
                         context: context,
                         child: AlertDialog(
-                          title: Text("Deleting Task.."),
-                          content: Text("Are You Sure Want To Proceed ?"),
+                          title: Text("Delete Task"),
+                          content: Text("Are you sure want to delete " + itemData.itemTitle + "?"),
                           actions: <Widget>[
                             FlatButton(
                                 child: Text("Yes"),
