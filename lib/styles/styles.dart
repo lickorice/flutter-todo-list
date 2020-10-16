@@ -14,5 +14,14 @@ var textStrikeThrough = TextStyle(
     color: Colors.grey,
     fontFamily: "Baloo_Chettan_2",
     fontSize: 18.0);
-    
+
 var textNormal = TextStyle(fontFamily: "Baloo_Chettan_2", fontSize: 18.0);
+
+// This removes the glow when scrolling
+class NoGlowBehaviour extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}

@@ -58,7 +58,7 @@ class _TodoListState extends State<TodoList> {
     // the TodoListItem widgets:
     return ScrollConfiguration(
       // Wrapped a scroll configuration widget to apply no glow behavior. Class for it is at the bottom
-      behavior: NoGlowBehaviour(),
+      behavior: MyStyles.NoGlowBehaviour(),
       child: new ListView.builder(
           itemCount: _todoListItems.length,
           // The total count in our list of class instances
@@ -123,14 +123,5 @@ class _TodoListState extends State<TodoList> {
         backgroundColor: Colors.green,
       ),
     );
-  }
-}
-
-// this one just removes the glow when you scroll down
-class NoGlowBehaviour extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }
