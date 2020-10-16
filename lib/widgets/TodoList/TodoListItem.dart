@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_todo_list/styles/styles.dart' as MyStyles;
+
 class TodoListItemData {
   // The class that stores the data for the TodoListItem widget itself.
   // We use this and not raw strings and booleans so that we could pass
@@ -53,18 +55,8 @@ class _TodoListItemState extends State<TodoListItem> {
             children: <Widget>[
               Text(itemData.itemTitle,
                   style: (() {
-                    if (itemData.isChecked)
-                      return TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          decorationThickness: 2.0,
-                          color: Colors.grey,
-                          fontFamily: "Baloo_Chettan_2",
-                          fontSize: 18.0);
-                    //fontWeight: FontWeight.bold);
-                    else
-                      return TextStyle(
-                          fontFamily: "Baloo_Chettan_2", fontSize: 18.0);
-                    //fontWeight: FontWeight.bold);
+                    // Ternary operator, this is an if-else block ;)
+                    return itemData.isChecked ? MyStyles.textStrikeThrough : MyStyles.textNormal;
                   }())),
               Row(
                 children: <Widget>[
@@ -114,14 +106,14 @@ class _TodoListItemState extends State<TodoListItem> {
                                 child: Text("Yes"),
                                 onPressed: () {
                                   setState(() {
-                                    // task is deleted if Yes is pressed
+                                    // Task is deleted if Yes is pressed
                                     itemData.removeSelf(itemData);
                                   });
                                   Navigator.of(context).pop();
                                 }),
                             FlatButton(
                               child: Text("No"),
-                              // goes back to main interface if No is pressed
+                              // Goes back to main interface if No is pressed
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -135,6 +127,8 @@ class _TodoListItemState extends State<TodoListItem> {
                   ),
                 ],
               ),
-            ]));
+            ]
+          )
+        );
   }
 }
