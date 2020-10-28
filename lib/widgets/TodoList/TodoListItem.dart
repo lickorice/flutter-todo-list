@@ -11,7 +11,7 @@ class TodoListItemData {
   String itemTitle; // Title of the item
   bool isChecked; // State of the checkbox
   Function(TodoListItemData)
-      removeSelf; // Function that removes itself from the parent list
+  removeSelf; // Function that removes itself from the parent list
   TodoListItemData(
       this.itemTitle, this.isChecked, this.removeSelf); // Constructor
 }
@@ -31,7 +31,7 @@ class TodoListItem extends StatefulWidget {
 class _TodoListItemState extends State<TodoListItem> {
   // The state itself for TodoListItem:
   TodoListItemData
-      itemData; // We store the instance of TodoListItemData like so
+  itemData; // We store the instance of TodoListItemData like so
   _TodoListItemState(this.itemData); // The constructor.
 
   @override
@@ -62,7 +62,7 @@ class _TodoListItemState extends State<TodoListItem> {
                       // When the "edit" button is pressed, it launches a dialog containing another
                       // widget: a text field with a save button that performs the necessary
                       // value modifications:
-                      
+
                       // A TextEditingController for editing the itemTitle of our to-do list:
                       TextEditingController itemTitleController = new TextEditingController();
                       itemTitleController.text = itemData.itemTitle;
@@ -73,7 +73,7 @@ class _TodoListItemState extends State<TodoListItem> {
                           title: Text("Change Item Title"),
                           content: TextField(
                             decoration:
-                                new InputDecoration(hintText: "Item title"),
+                            new InputDecoration(hintText: "Item title"),
                             controller: itemTitleController,
                           ),
                           actions: <Widget>[
@@ -130,7 +130,7 @@ class _TodoListItemState extends State<TodoListItem> {
                 ],
               ),
             ]
-          )
-        );
+        )
+    );
   }
 }
