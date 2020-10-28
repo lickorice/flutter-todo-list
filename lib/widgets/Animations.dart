@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class AnimationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Tween<double> _scaleTween = Tween<double>(begin: 1, end: 2);
-    
+    Tween<double> _scaleTween = Tween<double>(begin: 1, end: 1.5);
+
     return Scaffold(
       body: Center(
         child: TweenAnimationBuilder(
