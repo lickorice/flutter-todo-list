@@ -43,8 +43,13 @@ class _AnimatedTodoListState extends State<AnimatedTodoList> {
               Text(item),
               IconButton(
                 onPressed: () {
-                  // When the "delete" button is pressed, we delete the item itself
-                  // from the parent list using the passed function before:
+                  setState(() {
+                    _animatedListKey.currentState.removeItem(
+                      index, (_, animation) => _slidingItem(context, index, animation),
+                      duration: const Duration(milliseconds: 500)
+                    );
+                    _animatedTodoListItems.removeAt(index);
+                  });
                 },
                 icon: Icon(Icons.delete),
                 color: Colors.red,
