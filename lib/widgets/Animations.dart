@@ -21,7 +21,8 @@ class AnimationPage extends StatelessWidget {
           child: Center(
             child: Text(
               'TEST XD',
-              style: Theme.of(context).textTheme.headline5,
+              // Commenting this out because it throws an error:
+              // style: Theme.of(context).textTheme.headline5, 
             ),  //Text
           ),  //Center
         ),  //Container
