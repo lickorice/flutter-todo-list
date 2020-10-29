@@ -30,6 +30,21 @@ class HomePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
+                "Animated Todo List",
+                style: TextStyle(
+                  //applies style to your text
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          // The enter button
+          EnterButton(40, 150, '/animated_todo_list'),
+
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
                 "Animations",
                 style: TextStyle(
                   //applies style to your text
