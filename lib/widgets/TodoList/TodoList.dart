@@ -71,9 +71,9 @@ class _TodoListState extends State<TodoList> {
                 // Note that TodoListItem takes TodoListItemData as
                 // a parameter.
                 ObjectKey(_todoListItems[
-                    index]) // Likewise, we would like a key unique to the object
-                // instance itself:
-                );
+                index]) // Likewise, we would like a key unique to the object
+              // instance itself:
+            );
           }),
     );
   }
@@ -90,14 +90,14 @@ class _TodoListState extends State<TodoList> {
         ),
         backgroundColor: Colors.white, // The title of our application
         automaticallyImplyLeading:
-            false, // Removes the back button on the appbar
+        false, // Removes the back button on the appbar
       ),
       body: _buildTodoList(), // The body builds the ListView here
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // A TextEditingController for editing the itemTitle of our to-do list:
           TextEditingController itemTitleController =
-              new TextEditingController();
+          new TextEditingController();
           itemTitleController.text = _getNextItemTitle();
           showDialog(
             context: context,
