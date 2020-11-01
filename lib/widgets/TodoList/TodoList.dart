@@ -18,6 +18,7 @@ class _TodoListState extends State<TodoList> {
   // the TodoListItem widgets around these as the TodoList updates
   // its state:
   List<TodoListItemData> _todoListItems;
+  final _animKey = GlobalKey<AnimatedListState>();
 
   // We override the initState() function because we cannot pass the
   // _removeTodoListItemData function to instantiation.
@@ -37,6 +38,8 @@ class _TodoListState extends State<TodoList> {
   void _addTodoListItemData(String itemTitle) {
     // This function adds a new instance of TodoListItemData to the _todoListItems
     // list named 'Item X'.
+    _animKey.currentState.insertItem(_todoListItems.length,
+        duration: const Duration(milliseconds: 500));
     setState(() {
       this._todoListItems.add(
           TodoListItemData(itemTitle, false, this._removeTodoListItemData));
@@ -46,6 +49,10 @@ class _TodoListState extends State<TodoList> {
   void _removeTodoListItemData(TodoListItemData item) {
     // This function deletes a TodoListItemData instance from the _todoListItems
     // list, given the instance as an argument (TodoListItemData item).
+    int itemIndex = _todoListItems.indexOf(item);
+    _animKey.currentState.removeItem(itemIndex,
+        (context, animation) => _buildItem(item, itemIndex, animation),
+        duration: const Duration(milliseconds: 500));
     setState(() {
       this._todoListItems.remove(item);
     });
@@ -59,23 +66,24 @@ class _TodoListState extends State<TodoList> {
     // This returns the ListView.builder that builds the whole ListView containing
     // the TodoListItem widgets:
     return ScrollConfiguration(
-      // Wrapped a scroll configuration widget to apply no glow behavior. Class for it is at the bottom
-      behavior: MyStyles.NoGlowBehaviour(),
-      child: new ListView.builder(
-          itemCount: _todoListItems.length,
-          // The total count in our list of class instances
-          itemBuilder: (context, index) {
-            // The builder itself. Note that this is a function.
-            return TodoListItem(
-                _todoListItems[index],
-                // Note that TodoListItem takes TodoListItemData as
-                // a parameter.
-                ObjectKey(_todoListItems[
-                index]) // Likewise, we would like a key unique to the object
-              // instance itself:
-            );
-          }),
-    );
+        // Wrapped a scroll configuration widget to apply no glow behavior. Class for it is at the bottom
+        behavior: MyStyles.NoGlowBehaviour(),
+        child: AnimatedList(
+          key: _animKey,
+          itemBuilder: (context, index, animation) =>
+              _buildItem(_todoListItems[index], index, animation),
+          initialItemCount: _todoListItems.length,
+        ));
+  }
+
+  Widget _buildItem(item, int index, Animation<double> animation) {
+    return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(-1, 0),
+          end: Offset(0, 0),
+        ).animate(animation),
+        child: TodoListItem(item, ObjectKey(item))
+      );
   }
 
   @override
@@ -90,14 +98,14 @@ class _TodoListState extends State<TodoList> {
         ),
         backgroundColor: Colors.white, // The title of our application
         automaticallyImplyLeading:
-        false, // Removes the back button on the appbar
+            false, // Removes the back button on the appbar
       ),
       body: _buildTodoList(), // The body builds the ListView here
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // A TextEditingController for editing the itemTitle of our to-do list:
           TextEditingController itemTitleController =
-          new TextEditingController();
+              new TextEditingController();
           itemTitleController.text = _getNextItemTitle();
           showDialog(
             context: context,
