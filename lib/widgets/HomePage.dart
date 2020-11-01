@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                "Animated Todo List",
+                "Animated List",
                 style: TextStyle(
                   //applies style to your text
                     fontSize: 20,
